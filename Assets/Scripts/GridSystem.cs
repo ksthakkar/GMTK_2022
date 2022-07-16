@@ -42,6 +42,23 @@ public class GridSystem : MonoBehaviour
         return x / count;
     }
 
+    void returnPositions()
+    {
+        float columnInterval = splitDistance(length, size[0]);
+        float rowInterval = 0f;
+        for (int i = 0; i < size[1]; i++) //for each row
+        {
+            float yPos = corners[0].transform.position.y + rowInterval;
+            for (int j = 0; j<size[0]; j++)// for each column 
+            {
+                float xPos = corners[0].transform.position.x + columnInterval;
+
+            }
+            
+        }
+
+    }
+
     void addToGrid()
     {
 
