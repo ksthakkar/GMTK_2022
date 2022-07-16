@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
 
     public static float currentMoney = 0;
-    public static float gambleCost;
+    
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     {
         
     }
-    public int rollDie(int n) {
+    public static int rollDie(int n) {
 
         int roll = Random.Range(1, n+1);
         return roll;
@@ -38,28 +38,6 @@ public class Player : MonoBehaviour
         int moveDist = rollDie(6);
 
     }
-
-
-    public void gamble(int costIncrease) {
-        currentMoney -= gambleCost;
-        gambleCost += costIncrease;
-
-        int roll = rollDie(20);
-
-        //weights it a tiny bit, but still not absolutely terrible
-        if (roll > 16 && roll != 20)
-        {
-            roll -= 2;
-        }
-        else if (roll > 12 && roll != 20 && roll > 1)
-        {
-            roll --;
-        }
-
-        //just have an if statement for each effect with certain ranges of rolls having certain effects
-        //not implemented yet since no effects so idk what to do for balancing proper rolls
-    }
-
 
 
 }
