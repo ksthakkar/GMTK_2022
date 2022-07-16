@@ -321,7 +321,7 @@ MonoBehaviour:
   corners:
   - {fileID: 477870586}
   - {fileID: 610804390}
-  size: 
+  gridPoint: {fileID: 0}
 --- !u!4 &510151694
 Transform:
   m_ObjectHideFlags: 0

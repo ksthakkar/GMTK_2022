@@ -25,7 +25,7 @@ public class Gamble : MonoBehaviour
 
         int roll = Player.rollDie(20);
 
-        //weights it a tiny bit, but still not absolutely terrible
+        //weights it a tiny bit, but still not absolutely terrible probably should change
         if (roll > 16 && roll != 20)
         {
             roll -= 2;

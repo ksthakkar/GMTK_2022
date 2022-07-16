@@ -18,7 +18,7 @@ public class Coin : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player") {
+        if (collision.gameObject.tag == "Player") {
             Player.currentMoney += 10;
             Destroy(this.gameObject);
         }
