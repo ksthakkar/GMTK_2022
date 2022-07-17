@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4687614208069212903}
   - component: {fileID: 2231700512641831634}
   - component: {fileID: 7111831086652178210}
-  - component: {fileID: 7382919382929574884}
   - component: {fileID: 7086703092421307088}
+  - component: {fileID: 7254035346207019299}
   m_Layer: 0
   m_Name: flag
   m_TagString: Untagged
@@ -98,8 +98,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa166de0ce6bc84ab3ca87b7c467751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &7382919382929574884
-BoxCollider2D:
+--- !u!95 &7086703092421307088
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8900280003712040888}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0bd6c3056da37c4419b4a740461a63ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &7254035346207019299
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,25 +140,11 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.27, y: 0.45}
-  m_EdgeRadius: 0
---- !u!95 &7086703092421307088
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8900280003712040888}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.11633611, y: -0.325748}
+      - {x: -0.040213805, y: -0.27847582}
+      - {x: 0.073159054, y: -0.20737305}
+      - {x: -0.037101794, y: -0.15023851}
+      - {x: -0.12885955, y: -0.108547226}
+      - {x: -0.3295064, y: -0.21427107}

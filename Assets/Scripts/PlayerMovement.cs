@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator anim;
 
+    public ParticleSystem dust;
+
    // public static int steps;
 
     public GameObject player;
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public Direction r1Dir = new Direction();
 
     public GridSystem grid;
-    private int[] initalCoor = new int[] {7, 7 };
+    public int[] initalCoor = new int[] {7, 7 };
     public int[] lastPose = new int[] { 5, 1 };
 
     private bool inBounds;
@@ -426,6 +428,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 temp_pos = GridSystem.gridNum[a, b].transform.position;
             player.transform.position = temp_pos;
+            dust.Play();
 
             WASD = false;
             randomSteps = true;

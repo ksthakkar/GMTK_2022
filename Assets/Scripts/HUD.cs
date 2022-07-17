@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] Text coins;
+    public TextMesh coins;
 
 
     // Update is called once per frame
