@@ -44,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     public static int stepLoopCount = 1;
     public float waitRandomTime = 0;
 
+
+    bool playerOnTiles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         randomSteps = true;
         randomAll = false;
         stepsOver = false;
+        playerOnTiles = true;
     }
 
     // Update is called once per frame
