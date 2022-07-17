@@ -16,8 +16,7 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    { 
     }
     public static int rollDie(int n) {
 
