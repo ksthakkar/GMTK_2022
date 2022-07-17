@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public Direction r1Dir = new Direction();
 
     public GridSystem grid;
-    private int[] initalCoor = new int[] { 0, 0 };
+    private int[] initalCoor = new int[] {7, 7 };
     public int[] lastPose = new int[] { 5, 1 };
 
     private bool inBounds;
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     public float waitRandomTime = 0;
 
 
-    bool playerOnTiles;
+    public bool playerOnTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -61,113 +61,115 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (lastPose[0] > -1 && lastPose[0] < GridSystem.size[0] && lastPose[1] > -1 && lastPose[1] < GridSystem.size[1])
+        if (playerOnTiles)
         {
-            inBounds = true;
-        }
-        else
-        {
-            inBounds = false;
-        }
+            if (lastPose[0] > -1 && lastPose[0] < GridSystem.size[0] && lastPose[1] > -1 && lastPose[1] < GridSystem.size[1])
+            {
+                inBounds = true;
+            }
+            else
+            {
+                inBounds = false;
+            }
 
-        if (WASD)
-        {
-            waitRandomTime = 0;
-            stepLoopCount = 1;
-            if (Input.GetKeyDown(KeyCode.W))
+            if (WASD)
             {
-                playerDir = Direction.Forward;
-                stepsOver = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                playerDir = Direction.Left;
-                stepsOver = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                playerDir = Direction.Backward;
-                stepsOver = false;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                playerDir = Direction.Right;
-                stepsOver = false;
-            }
-        }
-
-        if (randomSteps)
-        {
-            if (lr)
-            {
+                waitRandomTime = 0;
+                stepLoopCount = 1;
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    r1Dir = Direction.Forward;
-
+                    playerDir = Direction.Forward;
+                    stepsOver = false;
                 }
                 else if (Input.GetKeyDown(KeyCode.A))
                 {
-                    r1Dir = Direction.Left;
-
+                    playerDir = Direction.Left;
+                    stepsOver = false;
                 }
                 else if (Input.GetKeyDown(KeyCode.S))
                 {
-                    r1Dir = Direction.Backward;
-
+                    playerDir = Direction.Backward;
+                    stepsOver = false;
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
-                    r1Dir = Direction.Right;
-
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    playerDir = r1Dir;
+                    playerDir = Direction.Right;
                     stepsOver = false;
-                    lr = false;
                 }
             }
-        }
 
-        if (randomSteps == true && !stepsOver)
-        {
-
-            stepLoopCount = Random.Range(1, 6);
-            waitRandomTime = 0.5f;
-
-        }
-
-
-        if (randomAll)
-        {
-            if (lr)
+            if (randomSteps)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (lr)
                 {
-                    float num = Random.Range(1, 4);
-                    switch (num)
+                    if (Input.GetKeyDown(KeyCode.W))
                     {
-                        case 1:
-                            playerDir = Direction.Forward;
-                            break;
-                        case 2:
-                            playerDir = Direction.Left;
-                            break;
-                        case 3:
-                            playerDir = Direction.Right;
-                            break;
-                        case 4:
-                            playerDir = Direction.Backward;
-                            break;
-                        default:
-                            break;
+                        r1Dir = Direction.Forward;
 
                     }
-                    stepsOver = false;
-                    lr = false;
+                    else if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        r1Dir = Direction.Left;
+
+                    }
+                    else if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        r1Dir = Direction.Backward;
+
+                    }
+                    else if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        r1Dir = Direction.Right;
+
+                    }
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        playerDir = r1Dir;
+                        stepsOver = false;
+                        lr = false;
+                    }
                 }
             }
-        }
+
+            if (randomSteps == true && !stepsOver)
+            {
+
+                stepLoopCount = Random.Range(1, 6);
+                waitRandomTime = 0.5f;
+
+            }
+
+
+            if (randomAll)
+            {
+                if (lr)
+                {
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        float num = Random.Range(1, 4);
+                        switch (num)
+                        {
+                            case 1:
+                                playerDir = Direction.Forward;
+                                break;
+                            case 2:
+                                playerDir = Direction.Left;
+                                break;
+                            case 3:
+                                playerDir = Direction.Right;
+                                break;
+                            case 4:
+                                playerDir = Direction.Backward;
+                                break;
+                            default:
+                                break;
+
+                        }
+                        stepsOver = false;
+                        lr = false;
+                    }
+                }
+            }
 
             if (randomAll == true && !stepsOver)
             {
@@ -208,6 +210,22 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (!playerOnTiles)
+        {
+            player.GetComponent<SpriteRenderer>().enabled = false;
+            StartCoroutine(resetToInit());
+
+        }
+        }
+
+        IEnumerator resetToInit()
+        {
+            yield return new WaitForSeconds(2);
+            moveToSpot(initalCoor[0], initalCoor[1]);
+        lastPose[0] = initalCoor[0];
+        lastPose[1] = initalCoor[1];
+            player.GetComponent<SpriteRenderer>().enabled = true;
+        }
 
         IEnumerator MoveAndWait(int a, int b, float sec)
         {
@@ -259,4 +277,20 @@ public class PlayerMovement : MonoBehaviour
             randomSteps = true;
             randomAll = false;
         }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        Debug.Log(other.name);
+        playerOnTiles = true;
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.name);
+        playerOnTiles = true;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+        {
+            Debug.Log(other.name);
+            playerOnTiles = false;
+        }
+}

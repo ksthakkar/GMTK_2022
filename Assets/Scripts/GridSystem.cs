@@ -14,7 +14,7 @@ public class GridSystem : MonoBehaviour
 {
     public GameObject[] corners;
     public GameObject gridPoint;
-    public static int[] size = {12, 11};
+    public static int[] size = {14, 13};
 
     private float length, width;
     private static int l, w;
@@ -27,7 +27,8 @@ public class GridSystem : MonoBehaviour
 
         returnPositions();
 
-        gridNum[0, 0].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        //gridNum[0, 0].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        hideCorners();
 
     }
 
@@ -72,6 +73,17 @@ public class GridSystem : MonoBehaviour
         return new Vector2(aO.transform.position.x + b_new, bO.transform.position.y - c_new);
     }
 
+    void hideCorners()
+    {
+        foreach (GameObject g in corners){
+            g.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+    void hidePoints(GameObject a)
+    {
+        a.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
 
     void returnPositions()
     {
@@ -89,13 +101,15 @@ public class GridSystem : MonoBehaviour
             gridNum[i, 0] = gridObjectY;
             GameObject gridObjectY2 = Instantiate(gridPoint, y2, Quaternion.identity);
             gridNum[i, newColumn] = gridObjectY2;
+            hidePoints(gridObjectY);
+            hidePoints(gridObjectY2);
 
             for (int j = 0; j < (newColumn); j++)// for each column 
             {
-                Debug.Log(j + "" + i);
                 Vector2 x = newXPose((columnInterval * j), gridObjectY, gridObjectY2, length, getB(gridObjectY, gridObjectY2), getC(gridObjectY, gridObjectY2));
                 GameObject gridObjectX = Instantiate(gridPoint, x, Quaternion.identity);
                 gridNum[i, j] = gridObjectX;
+                hidePoints(gridObjectX);
             }
 
         }
