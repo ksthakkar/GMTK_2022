@@ -15,7 +15,8 @@ using UnityEngine;
  */
 public class PlayerMovement : MonoBehaviour
 {
-    public enum Direction { 
+    public enum Direction
+    {
         Forward,
         Backward,
         Left,
@@ -27,40 +28,48 @@ public class PlayerMovement : MonoBehaviour
     public GameObject player;
 
     public Direction playerDir = new Direction();
+    public Direction r1Dir = new Direction();
 
     public GridSystem grid;
-    public int[] initalCoor = new int[]{0,0};
-    public int[] lastPose = new int[]{ 1, 1 };
+    private int[] initalCoor = new int[] { 0, 0 };
+    public int[] lastPose = new int[] { 5, 1 };
 
-    public bool inBounds;
-    public bool stepsOver = true;
-    public bool WASD = false;
-    public bool randomSteps = false;
+    private bool inBounds;
+    private bool stepsOver = true;
+    public bool WASD = true;
+    public bool randomSteps = true;
     public bool randomAll = false;
+    private bool lr;
 
-    public int stepLoopCount;
-    public int waitRandomTime;
+    public int stepLoopCount = 1;
+    public float waitRandomTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        WASD = false;
+        randomSteps = true;
+        randomAll = false;
+        stepsOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(lastPose[0] + "   " + lastPose[1]);
-        Debug.Log(GridSystem.size[0] + "   " + GridSystem.size[1]);
 
         if (lastPose[0] > -1 && lastPose[0] < GridSystem.size[0] && lastPose[1] > -1 && lastPose[1] < GridSystem.size[1])
         {
             inBounds = true;
-        } else{
+        }
+        else
+        {
             inBounds = false;
         }
 
         if (WASD)
         {
+            waitRandomTime = 0;
+            stepLoopCount = 1;
             if (Input.GetKeyDown(KeyCode.W))
             {
                 playerDir = Direction.Forward;
@@ -83,94 +92,171 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (randomSteps = true)
+        if (randomSteps)
         {
-        }
-
-        if (inBounds && !stepsOver) {
-
-            switch (playerDir)
+            if (lr)
             {
-                case Direction.Forward:
-                    for (int i = 0; i <= stepLoopCount; i++)
-                    {
-                        calculateNewPose(-1, 0);
-                    }
-                    stepsOver = true;
-                    break;
-                case Direction.Backward:
-                    calculateNewPose(1, 0);
-                    stepsOver = true;
-                    break;
-                case Direction.Right:
-                    calculateNewPose(0, 1);
-                    stepsOver = true;
-                    break;
-                case Direction.Left:
-                    calculateNewPose(0, -1);
-                    stepsOver = true;
-                    break;
-                default:
-                    break;
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    r1Dir = Direction.Forward;
+
+                }
+                else if (Input.GetKeyDown(KeyCode.A))
+                {
+                    r1Dir = Direction.Left;
+
+                }
+                else if (Input.GetKeyDown(KeyCode.S))
+                {
+                    r1Dir = Direction.Backward;
+
+                }
+                else if (Input.GetKeyDown(KeyCode.D))
+                {
+                    r1Dir = Direction.Right;
+
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    playerDir = r1Dir;
+                    stepsOver = false;
+                    lr = false;
+                }
             }
         }
-    }
 
-    int stepNumber()
-    {
-
-        return 0;
-    }
-
-    void calculateNewPose(int a, int b)
-    {
-
-        lastPose[0] = lastPose[0] + a;
-        lastPose[1] = lastPose[1] + b;
-
-        if (lastPose[0] < 0){
-            lastPose[0] = 0;
-        }
-        if (lastPose[0] > (GridSystem.size[0] - 1)) {
-            lastPose[0] = GridSystem.size[0] - 1;
-        }
-        if (lastPose[1] < 0)
+        if (randomSteps == true && !stepsOver)
         {
-            lastPose[1] = 0;
+
+            stepLoopCount = Random.Range(1, 6);
+            waitRandomTime = 0.5f;
+
         }
-        if (lastPose[1] > (GridSystem.size[1] - 1))
+
+
+        if (randomAll)
         {
-            lastPose[1] = GridSystem.size[1] - 1;
+            if (lr)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    float num = Random.Range(1, 4);
+                    switch (num)
+                    {
+                        case 1:
+                            playerDir = Direction.Forward;
+                            break;
+                        case 2:
+                            playerDir = Direction.Left;
+                            break;
+                        case 3:
+                            playerDir = Direction.Right;
+                            break;
+                        case 4:
+                            playerDir = Direction.Backward;
+                            break;
+                        default:
+                            break;
+
+                    }
+                    stepsOver = false;
+                    lr = false;
+                }
+            }
         }
-        moveToSpot(lastPose[0], lastPose[1]);
-        
-    }
+
+            if (randomAll == true && !stepsOver)
+            {
+
+                stepLoopCount = Random.Range(1, 6);
+                waitRandomTime = 0.5f;
 
 
-    void bounds()
-    {
-        if (lastPose[0] > GridSystem.size[0] - 1){
-            lastPose[0] = GridSystem.size[0] - 1;
-        } else if (lastPose[1] > GridSystem.size[1] - 1)
+            }
+
+            if (inBounds && !stepsOver)
+            {
+
+                switch (playerDir)
+                {
+                    case Direction.Forward:
+                        StartCoroutine(MoveAndWait(-1, 0, waitRandomTime));
+                        stepsOver = true;
+                        break;
+                    case Direction.Backward:
+                        StartCoroutine(MoveAndWait(1, 0, waitRandomTime));
+                        stepsOver = true;
+                        //lr = true;
+                        break;
+                    case Direction.Right:
+                        StartCoroutine(MoveAndWait(0, 1, waitRandomTime));
+                        stepsOver = true;
+                        //lr = true;
+                        break;
+                    case Direction.Left:
+                        StartCoroutine(MoveAndWait(0, -1, waitRandomTime));
+                        stepsOver = true;
+                        //lr = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        IEnumerator MoveAndWait(int a, int b, float sec)
         {
-            lastPose[1] = GridSystem.size[1] - 1;
+
+            for (int i = 0; i < stepLoopCount; i++)
+            {
+                yield return new WaitForSeconds(sec);
+                calculateNewPose(a, b);
+            }
+            lr = true;
+
+        }
+
+        void pickRandomDir(Direction x)
+        {
+            float num = Random.Range(1, 4);
+
+            
+
+        }
+
+        void calculateNewPose(int a, int b)
+        {
+
+            lastPose[0] = lastPose[0] + a;
+            lastPose[1] = lastPose[1] + b;
+
+            if (lastPose[0] < 0)
+            {
+                lastPose[0] = 0;
+            }
+            if (lastPose[0] > (GridSystem.size[0] - 1))
+            {
+                lastPose[0] = GridSystem.size[0] - 1;
+            }
+            if (lastPose[1] < 0)
+            {
+                lastPose[1] = 0;
+            }
+            if (lastPose[1] > (GridSystem.size[1] - 1))
+            {
+                lastPose[1] = GridSystem.size[1] - 1;
+            }
+            moveToSpot(lastPose[0], lastPose[1]);
+
+
+
+        }
+
+
+        void moveToSpot(int a, int b)
+        {
+            Vector2 temp_pos = GridSystem.gridNum[a, b].transform.position;
+            player.transform.position = temp_pos;
         }
     }
-
-    void moveKeyBoard(Direction d)
-    {
-        
-    }
-
-    void moveSpaces()
-    {
-
-    }
-
-
-    void moveToSpot(int a, int b)
-    {
-        Vector2 temp_pos = GridSystem.gridNum[a, b].transform.position;
-        player.transform.position = temp_pos;
-    }
-}
