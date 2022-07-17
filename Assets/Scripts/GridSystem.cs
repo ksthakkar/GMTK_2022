@@ -19,7 +19,7 @@ public class GridSystem : MonoBehaviour
     private float length, width;
     private static int l, w;
 
-    public GameObject[,] gridNum = new GameObject [size[0], size[1]];
+    public static GameObject[,] gridNum = new GameObject [size[0], size[1]];
     void Start()
     {
         length = distancetoCorner(corners[0], corners[1]);
@@ -27,7 +27,7 @@ public class GridSystem : MonoBehaviour
 
         returnPositions();
 
-        gridNum[1, 3].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        gridNum[0, 0].transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
 
     }
 
