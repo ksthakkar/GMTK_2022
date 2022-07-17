@@ -36,9 +36,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool inBounds;
     private bool stepsOver = true;
-    public bool WASD = true;
-    public bool randomSteps = true;
-    public bool randomAll = false;
+    public static bool WASD = true;
+    public static bool randomSteps = true;
+    public static bool randomAll = false;
     private bool lr;
 
     public int stepLoopCount = 1;
