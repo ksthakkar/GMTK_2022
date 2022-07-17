@@ -18,24 +18,33 @@ public class Gamble : MonoBehaviour
         
     }
 
-    public void gamble(int costIncrease)
+    public void gamble()
     {
         Player.currentMoney -= gambleCost;
-        gambleCost += costIncrease;
+        gambleCost += 15;
 
-        int roll = Player.rollDie(20);
+        int roll = Player.rollDie(6);
 
-        //weights it a tiny bit, but still not absolutely terrible probably should change
-        if (roll > 16 && roll != 20)
-        {
-            roll -= 2;
+        switch (roll) {
+            case 1:
+                return;
+            case 2:
+                PlayerMovement.randomAll = true;
+                return;
+            case 3:
+                PlayerMovement.randomSteps = false;
+                PlayerMovement.stepLoopCount = 3;
+                return;
+            case 4:
+                PlayerMovement.stepLoopCount++;
+                return;
+            case 5:
+                PlayerMovement.stepLoopCount--;
+                return;
+            case 6:
+                PlayerMovement.stepLoopCount+= 2;
+                return;
+        
         }
-        else if (roll > 12 && roll != 20 && roll > 1)
-        {
-            roll--;
-        }
-
-        //just have an if statement for each effect with certain ranges of rolls having certain effects
-        //not implemented yet since no effects so idk what to do for balancing proper rolls
     }
 }

@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public static bool randomAll = false;
     private bool lr;
 
-    public int stepLoopCount = 1;
+    public static int stepLoopCount = 1;
     public float waitRandomTime = 0;
 
     // Start is called before the first frame update
@@ -250,5 +250,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 temp_pos = GridSystem.gridNum[a, b].transform.position;
             player.transform.position = temp_pos;
+
+            WASD = false;
+            randomSteps = true;
+            randomAll = false;
         }
     }
