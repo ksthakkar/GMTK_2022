@@ -42,7 +42,7 @@ public class Gamble : MonoBehaviour
                 PlayerMovement.stepLoopCount--;
                 return;
             case 6:
-                PlayerMovement.stepLoopCount+= 2;
+                PlayerMovement.stepLoopCount--;
                 return;
         
         }

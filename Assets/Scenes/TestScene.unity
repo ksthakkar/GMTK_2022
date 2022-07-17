@@ -321,16 +321,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 455161635}
   playerDir: 0
+  r1Dir: 0
   grid: {fileID: 510151693}
-  initalCoor: 0000000000000000
   lastPose: 0000000000000000
-  inBounds: 0
-  stepsOver: 1
-  WASD: 0
-  randomSteps: 0
-  randomAll: 0
-  stepLoopCount: 0
   waitRandomTime: 0
+  playerOnTiles: 0
 --- !u!212 &455161637
 SpriteRenderer:
   m_ObjectHideFlags: 0
