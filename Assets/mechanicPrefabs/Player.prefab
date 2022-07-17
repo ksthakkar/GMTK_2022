@@ -113,6 +113,7 @@ MonoBehaviour:
   - {fileID: 0}
   anim: {fileID: 7189429891950455646}
   dust: {fileID: 4320178796241612205}
+  roll: {fileID: 8300000, guid: 41fbe7dc54f579a439b9ddc31fcc5635, type: 3}
   player: {fileID: 7189429891950455647}
   playerDir: 0
   r1Dir: 0

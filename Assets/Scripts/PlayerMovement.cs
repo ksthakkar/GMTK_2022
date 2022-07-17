@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     public ParticleSystem dust;
 
+    [SerializeField] AudioClip roll;
+
    // public static int steps;
 
     public GameObject player;
