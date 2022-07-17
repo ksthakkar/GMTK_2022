@@ -217,14 +217,6 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        void pickRandomDir(Direction x)
-        {
-            float num = Random.Range(1, 4);
-
-            
-
-        }
-
         void calculateNewPose(int a, int b)
         {
 
