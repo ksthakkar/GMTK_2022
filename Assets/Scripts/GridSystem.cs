@@ -14,7 +14,7 @@ public class GridSystem : MonoBehaviour
 {
     public GameObject[] corners;
     public GameObject gridPoint;
-    public static int[] size = {14, 13};
+    public static int[] size = {14, 14};
 
     private float length, width;
     private static int l, w;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 /**
@@ -23,7 +24,11 @@ public class PlayerMovement : MonoBehaviour
         Right
     }
 
-    public static int steps;
+    public GameObject[] diceHud;
+
+    public Animator anim;
+
+   // public static int steps;
 
     public GameObject player;
 
@@ -102,25 +107,30 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (lr)
                 {
+                    setDiceDist(stepLoopCount);
                     if (Input.GetKeyDown(KeyCode.W))
                     {
                         r1Dir = Direction.Forward;
+                        SetDiceDir(2);
 
                     }
                     else if (Input.GetKeyDown(KeyCode.A))
                     {
                         r1Dir = Direction.Left;
+                        SetDiceDir(3);
 
                     }
                     else if (Input.GetKeyDown(KeyCode.S))
                     {
                         r1Dir = Direction.Backward;
 
+                        SetDiceDir(4);
+
                     }
                     else if (Input.GetKeyDown(KeyCode.D))
                     {
                         r1Dir = Direction.Right;
-
+                        SetDiceDir(1);
                     }
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
@@ -144,6 +154,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (lr)
                 {
+                    setDiceDist(stepLoopCount);
+
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         float num = Random.Range(1, 4);
@@ -151,15 +163,20 @@ public class PlayerMovement : MonoBehaviour
                         {
                             case 1:
                                 playerDir = Direction.Forward;
+                                SetDiceDir(2);
                                 break;
                             case 2:
                                 playerDir = Direction.Left;
+                                SetDiceDir(3);
                                 break;
                             case 3:
                                 playerDir = Direction.Right;
+                                SetDiceDir(1);
+
                                 break;
                             case 4:
                                 playerDir = Direction.Backward;
+                                SetDiceDir(4);
                                 break;
                             default:
                                 break;
@@ -175,7 +192,8 @@ public class PlayerMovement : MonoBehaviour
             {
 
                 stepLoopCount = Random.Range(1, 6);
-                waitRandomTime = 0.5f;
+                
+                waitRandomTime = 0.3f;
 
 
             }
@@ -188,23 +206,49 @@ public class PlayerMovement : MonoBehaviour
                     case Direction.Forward:
                         StartCoroutine(MoveAndWait(-1, 0, waitRandomTime));
                         stepsOver = true;
+                        anim.SetBool("North", false);
+                        anim.SetBool("South", false);
+                        anim.SetBool("West", true);
+                        anim.SetBool("East", false);
+
+                        
+
                         break;
                     case Direction.Backward:
                         StartCoroutine(MoveAndWait(1, 0, waitRandomTime));
                         stepsOver = true;
-                        //lr = true;
+                        anim.SetBool("North", false);
+                        anim.SetBool("South", false);
+                        anim.SetBool("West", false);
+                        anim.SetBool("East", true);
+
+                        
                         break;
                     case Direction.Right:
                         StartCoroutine(MoveAndWait(0, 1, waitRandomTime));
                         stepsOver = true;
-                        //lr = true;
+                        anim.SetBool("North", true);
+                        anim.SetBool("South", false);
+                        anim.SetBool("West", false);
+                        anim.SetBool("East", false);
+
+
                         break;
                     case Direction.Left:
                         StartCoroutine(MoveAndWait(0, -1, waitRandomTime));
                         stepsOver = true;
-                        //lr = true;
+                        anim.SetBool("North", false);
+                        anim.SetBool("South", true);
+                        anim.SetBool("West", false);
+                        anim.SetBool("East", false);
+
+                        
                         break;
                     default:
+                        anim.SetBool("North", false);
+                        anim.SetBool("South", false);
+                        anim.SetBool("West", false);
+                        anim.SetBool("East", false);
                         break;
                 }
             }
@@ -218,7 +262,111 @@ public class PlayerMovement : MonoBehaviour
         }
         }
 
-        IEnumerator resetToInit()
+        void setDiceDist(float a)
+        {
+            switch (a)
+            {
+            case 1:
+                diceHud[0].SetActive(true);
+                diceHud[1].SetActive(false);
+                diceHud[2].SetActive(false);   
+                diceHud[3].SetActive(false); 
+                diceHud[4].SetActive(false);
+                diceHud[5].SetActive(false);
+
+                break;
+            case 2:
+                diceHud[0].SetActive(false);
+                diceHud[1].SetActive(true);
+                diceHud[2].SetActive(false);
+                diceHud[3].SetActive(false);
+                diceHud[4].SetActive(false);
+                diceHud[5].SetActive(false);
+
+                break;
+            case 3:
+                diceHud[0].SetActive(false);
+                diceHud[1].SetActive(false);
+                diceHud[2].SetActive(true);
+                diceHud[3].SetActive(false);
+                diceHud[4].SetActive(false);
+                diceHud[5].SetActive(false);
+
+                break;
+            case 4:
+                diceHud[0].SetActive(false);
+                diceHud[1].SetActive(false);
+                diceHud[2].SetActive(false);
+                diceHud[3].SetActive(true);
+                diceHud[4].SetActive(false);
+                diceHud[5].SetActive(false);
+
+                break;
+            case 5:
+                diceHud[0].SetActive(false);
+                diceHud[1].SetActive(false);
+                diceHud[2].SetActive(false);
+                diceHud[3].SetActive(false);
+                diceHud[4].SetActive(true);
+                diceHud[5].SetActive(false);
+
+                break;
+            case 6:
+                diceHud[0].SetActive(false);
+                diceHud[1].SetActive(false);
+                diceHud[2].SetActive(false);
+                diceHud[3].SetActive(false);
+                diceHud[4].SetActive(false);
+                diceHud[5].SetActive(true);
+
+                break;
+            default:
+                break;
+
+
+        }
+        }
+
+    void SetDiceDir(float a)
+    {
+
+        switch (a)
+        {
+            case 1:
+                diceHud[6].SetActive(true);
+                diceHud[7].SetActive(false);
+                diceHud[8].SetActive(false);
+                diceHud[9].SetActive(false);
+
+
+                break;
+            case 2:
+                diceHud[6].SetActive(false);
+                diceHud[7].SetActive(true);
+                diceHud[8].SetActive(false);
+                diceHud[9].SetActive(false);
+
+                break;
+            case 3:
+                diceHud[6].SetActive(false);
+                diceHud[7].SetActive(false);
+                diceHud[8].SetActive(true);
+                diceHud[9].SetActive(false);
+
+                break;
+            case 4:
+                diceHud[6].SetActive(false);
+                diceHud[7].SetActive(false);
+                diceHud[8].SetActive(false);
+                diceHud[9].SetActive(true);
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator resetToInit()
         {
             yield return new WaitForSeconds(2);
             moveToSpot(initalCoor[0], initalCoor[1]);
@@ -236,8 +384,14 @@ public class PlayerMovement : MonoBehaviour
                 calculateNewPose(a, b);
             }
             lr = true;
+        anim.SetBool("North", false);
+        anim.SetBool("South", false);
+        anim.SetBool("West", false);
+        anim.SetBool("East", false);
 
-        }
+
+
+    }
 
         void calculateNewPose(int a, int b)
         {
@@ -277,20 +431,19 @@ public class PlayerMovement : MonoBehaviour
             randomSteps = true;
             randomAll = false;
         }
-    void OnTriggerStay2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-        playerOnTiles = true;
-    }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log(other.name);
-        playerOnTiles = true;
-    }
-
-    void OnTriggerExit2D(Collider2D other)
+        void OnTriggerStay2D(Collider2D other)
         {
-            Debug.Log(other.name);
-            playerOnTiles = false;
+          
+            playerOnTiles = true;
+        }
+        void OnTriggerEnter2D(Collider2D other)
+        {
+         
+            playerOnTiles = true;
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+                playerOnTiles = false;
         }
 }
